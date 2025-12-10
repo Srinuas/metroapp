@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyderabad Metro - Book Your Journey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00AEEF;
+            --secondary: #7C3AED;
+            --accent: #F59E0B;
+            --dark: #1F2937;
+            --light: #F9FAFB;
+            --success: #10B981;
+            --danger: #EF4444;
+            --text: #374151;
+            --text-light: #9CA3AF;
+            --card-bg: #FFFFFF;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+        }
+
+        .logo-text h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Main Content Layout */
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1.8fr;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        /* Booking Panel */
+	
+	.booking-fare {
+	    padding: 0 1.5rem;
+	    text-align: center;
+	    min-width: 80px;
+	}
+
+	.booking-fare h4 {
+	    font-size: 1.3rem;
+	    font-weight: 700;
+	    color: var(--primary);
+	    margin: 0;
+	}
+
+	/* If you want a more prominent fare display */
+	.booking-fare.prominent h4 {
+	    font-size: 1.5rem;
+	    color: var(--secondary);
+	    font-weight: 800;
+	}
+
+	/* Alternative styling for fare with background */
+	    .booking-fare.with-bg {
+	    background-color: rgba(0, 174, 239, 0.1);
+	    padding: 0.5rem 1rem;
+	    border-radius: 6px;
+	    border-left: 3px solid var(--primary);
+	}
+	
+        .booking-panel {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.8rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-title i {
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .station-select {
+            position: relative;
+        }
+
+        .station-select input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 3rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .station-select input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 174, 239, 0.2);
+        }
+
+        .station-select i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+
+        .swap-stations {
+            display: flex;
+            justify-content: center;
+            margin: 0.5rem 0;
+        }
+
+        .swap-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .swap-btn:hover {
+            background-color: var(--secondary);
+            transform: rotate(180deg);
+        }
+
+        .date-time-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .ticket-type {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+        }
+
+        .ticket-option {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ticket-option:hover {
+            border-color: var(--primary);
+            background-color: rgba(0, 174, 239, 0.05);
+        }
+
+        .ticket-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(0, 174, 239, 0.1);
+        }
+
+        .ticket-option h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .ticket-option p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .ticket-price {
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 0.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.9rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0098d6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 174, 239, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--light);
+            color: var(--dark);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e7eb;
+        }
+
+        /* Map Panel */
+        .map-panel {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .map-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .map-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            color: var(--dark);
+        }
+
+        .map-legend {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .map-container {
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metro-map {
+            width: 100%;
+            height: 100%;
+            background-color: #f8fafc;
+            position: relative;
+            overflow: auto;
+        }
+
+        .metro-line {
+            position: absolute;
+            height: 6px;
+            border-radius: 3px;
+        }
+
+        .line-red {
+            background-color: #EF4444;
+            top: 30%;
+            left: 10%;
+            width: 80%;
+        }
+
+        .line-blue {
+            background-color: #3B82F6;
+            top: 50%;
+            left: 5%;
+            width: 90%;
+            transform: rotate(2deg);
+        }
+
+        .line-green {
+            background-color: #10B981;
+            top: 70%;
+            left: 15%;
+            width: 70%;
+            transform: rotate(-1deg);
+        }
+
+        .station {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: white;
+            border: 3px solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+
+        .station:hover {
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .station.interchange {
+            width: 32px;
+            height: 32px;
+        }
+
+        .station.selected {
+            transform: scale(1.4);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .station-name {
+            position: absolute;
+            background-color: var(--dark);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .station:hover .station-name {
+            opacity: 1;
+        }
+
+        .route-info {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .route-summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .route-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .detail-card {
+            background-color: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .detail-card h4 {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-card p {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* Recent Bookings */
+        .recent-bookings {
+            margin-top: 2rem;
+        }
+
+        .bookings-list {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .booking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .booking-item:hover {
+            background-color: rgba(0, 174, 239, 0.05);
+        }
+
+        .booking-route {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .route-line {
+            width: 4px;
+            height: 40px;
+            border-radius: 2px;
+        }
+
+        .route-line.red {
+            background-color: #EF4444;
+        }
+
+        .route-line.blue {
+            background-color: #3B82F6;
+        }
+
+        .route-line.green {
+            background-color: #10B981;
+        }
+
+        .booking-time {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .booking-actions button {
+            background-color: var(--light);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .booking-actions button:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2.5rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: #D1D5DB;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: #374151;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #374151;
+            color: #9CA3AF;
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .date-time-group, .ticket-type {
+                grid-template-columns: 1fr;
+            }
+            
+            .route-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-subway"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Hyderabad Metro</h1>
+                    <span>Fast · Safe · Smart Travel</span>
+                </div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Book Ticket</a></li>
+                    <li><a href="#">Routes & Maps</a></li>
+                    <li><a href="#">Fares</a></li>
+                    <li><a href="#">My Bookings</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <div class="user-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <span>Welcome, Maawa Bro!</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Booking Panel -->
+            <div class="booking-panel">
+                <h2 class="panel-title"><i class="fas fa-ticket-alt"></i> Book Your Metro Ticket</h2>
+                
+                <div class="form-group">
+                    <label for="from-station">From Station</label>
+                    <div class="station-select">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="from-station" placeholder="Select departure station" value="Ameerpet">
+                    </div>
+                </div>
+                
+                <div class="swap-stations">
+                    <button class="swap-btn" id="swap-stations">
+                        <i class="fas fa-exchange-alt"></i>
+                    </button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="to-station">To Station</label>
+                    <div class="station-select">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="to-station" placeholder="Select destination station" value="HITEC City">
+                    </div>
+                </div>
+                
+                <div class="form-group date-time-group">
+                    <div>
+                        <label for="travel-date">Travel Date</label>
+                        <div class="station-select">
+                            <i class="far fa-calendar"></i>
+                            <input type="date" id="travel-date" value="2023-12-15">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="travel-time">Travel Time</label>
+                        <div class="station-select">
+                            <i class="far fa-clock"></i>
+                            <input type="time" id="travel-time" value="14:30">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Select Ticket Type</label>
+                    <div class="ticket-type">
+                        <div class="ticket-option selected" data-type="single">
+                            <h4>Single Journey</h4>
+                            <p>One-way trip</p>
+                            <div class="ticket-price">₹20 - ₹60</div>
+                        </div>
+                        <div class="ticket-option" data-type="return">
+                            <h4>Return Trip</h4>
+                            <p>Round trip</p>
+                            <div class="ticket-price">₹35 - ₹110</div>
+                        </div>
+                        <div class="ticket-option" data-type="daypass">
+                            <h4>Day Pass</h4>
+                            <p>Unlimited rides</p>
+                            <div class="ticket-price">₹100</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="find-route">
+                        <i class="fas fa-route"></i> Find Route & Fare
+                    </button>
+                    <button class="btn btn-secondary" id="book-now">
+                        <i class="fas fa-wallet"></i> Quick Book
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Map Panel -->
+            <div class="map-panel">
+                <div class="map-header">
+                    <h2>Hyderabad Metro Network</h2>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #EF4444;"></div>
+                            <span>Red Line</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #3B82F6;"></div>
+                            <span>Blue Line</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #10B981;"></div>
+                            <span>Green Line</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="map-container">
+                    <div class="metro-map" id="metro-map">
+                        <!-- Metro lines will be drawn here with JS -->
+                    </div>
+                </div>
+                
+                <div class="route-info">
+                    <div class="route-summary">
+                        <div>
+                            <h3>Route: <span id="route-from">Ameerpet</span> to <span id="route-to">HITEC City</span></h3>
+                            <p class="route-desc" id="route-desc">Red Line → Blue Line (1 interchange)</p>
+                        </div>
+                        <div>
+                            <h3>Fare: <span id="route-fare">₹40</span></h3>
+                            <p class="booking-time" id="route-time">Travel Time: 22 min</p>
+                        </div>
+                    </div>
+                    
+                    <div class="route-details">
+                        <div class="detail-card">
+                            <h4>Distance</h4>
+                            <p id="route-distance">14.2 km</p>
+                        </div>
+                        <div class="detail-card">
+                            <h4>Stations</h4>
+                            <p id="route-stations">8</p>
+                        </div>
+                        <div class="detail-card">
+                            <h4>Interchanges</h4>
+                            <p id="route-interchanges">1</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Bookings -->
+        <div class="recent-bookings">
+            <h2 class="panel-title"><i class="fas fa-history"></i> Recent Bookings</h2>
+            
+            <div class="bookings-list">
+                <div class="booking-item">
+                    <div class="booking-route">
+                        <div class="route-line red"></div>
+                        <div>
+                            <h4>Miyapur → Ameerpet</h4>
+                            <p class="booking-time">Today, 09:15 AM · Single Journey</p>
+                        </div>
+                    </div>
+                    <div class="booking-fare">
+                        <h4>₹30</h4>
+                    </div>
+                    <div class="booking-actions">
+                        <button>View Ticket</button>
+                    </div>
+                </div>
+                
+                <div class="booking-item">
+                    <div class="booking-route">
+                        <div class="route-line blue"></div>
+                        <div>
+                            <h4>Raidurg → Begumpet</h4>
+                            <p class="booking-time">Yesterday, 06:45 PM · Return Trip</p>
+                        </div>
+                    </div>
+                    <div class="booking-fare">
+                        <h4>₹70</h4>
+                    </div>
+                    <div class="booking-actions">
+                        <button>View Ticket</button>
+                    </div>
+                </div>
+                
+                <div class="booking-item">
+                    <div class="booking-route">
+                        <div class="route-line green"></div>
+                        <div>
+                            <h4>Jubilee Bus Station → Parade Grounds</h4>
+                            <p class="booking-time">Dec 10, 2023 · Day Pass</p>
+                        </div>
+                    </div>
+                    <div class="booking-fare">
+                        <h4>₹100</h4>
+                    </div>
+                    <div class="booking-actions">
+                        <button>View Ticket</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Hyderabad Metro</h3>
+                    <p>Connecting the City of Pearls with safe, reliable, and efficient metro rail service.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Plan Your Journey</a></li>
+                        <li><a href="#">Fares & Tickets</a></li>
+                        <li><a href="#">Metro Timings</a></li>
+                        <li><a href="#">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Information</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">News & Updates</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Download App</h3>
+                    <p>Book tickets on the go with our mobile app</p>
+                    <div style="margin-top: 1rem;">
+                        <button style="background-color: #333; color: white; border: none; padding: 0.8rem 1.2rem; border-radius: 6px; margin-right: 0.5rem;">
+                            <i class="fab fa-google-play"></i> Google Play
+                        </button>
+                        <button style="background-color: #333; color: white; border: none; padding: 0.8rem 1.2rem; border-radius: 6px;">
+                            <i class="fab fa-apple"></i> App Store
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Hyderabad Metro Rail Limited. All rights reserved.</p>
+                <p style="margin-top: 0.5rem;">This is a demonstration application for container deployment.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Booking Modal -->
+    <div class="modal" id="booking-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm Your Booking</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="booking-details">
+                    <!-- Booking details will be populated here -->
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="cancel-booking">Cancel</button>
+                <button class="btn btn-primary" id="confirm-booking">Confirm & Pay</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hyderabad Metro Stations Data
+        const metroStations = [
+            { id: 1, name: "Miyapur", line: "red", x: 10, y: 30 },
+            { id: 2, name: "JNTU College", line: "red", x: 20, y: 30 },
+            { id: 3, name: "KPHB Colony", line: "red", x: 30, y: 30 },
+            { id: 4, name: "Kukatpally", line: "red", x: 40, y: 30 },
+            { id: 5, name: "Balanagar", line: "red", x: 50, y: 30 },
+            { id: 6, name: "Moosapet", line: "red", x: 60, y: 30 },
+            { id: 7, name: "Bharat Nagar", line: "red", x: 70, y: 30 },
+            { id: 8, name: "Erragadda", line: "red", x: 80, y: 30 },
+            { id: 9, name: "ESI Hospital", line: "red", x: 90, y: 30 },
+            { id: 10, name: "SR Nagar", line: "red", x: 100, y: 30 },
+            { id: 11, name: "Ameerpet", line: "red", x: 110, y: 30, interchange: true },
+            { id: 12, name: "Punjagutta", line: "red", x: 120, y: 30 },
+            { id: 13, name: "Irrum Manzil", line: "red", x: 130, y: 30 },
+            { id: 14, name: "Khairatabad", line: "red", x: 140, y: 30 },
+            { id: 15, name: "Lakdikapul", line: "red", x: 150, y: 30 },
+            { id: 16, name: "Assembly", line: "red", x: 160, y: 30 },
+            { id: 17, name: "Nampally", line: "red", x: 170, y: 30 },
+            { id: 18, name: "Gandhi Bhavan", line: "red", x: 180, y: 30 },
+            { id: 19, name: "Osmania Medical College", line: "red", x: 190, y: 30 },
+            { id: 20, name: "MG Bus Station", line: "red", x: 200, y: 30 },
+            { id: 21, name: "Malakpet", line: "blue", x: 50, y: 50 },
+            { id: 22, name: "New Market", line: "blue", x: 70, y: 50 },
+            { id: 23, name: "Musarambagh", line: "blue", x: 90, y: 50 },
+            { id: 24, name: "Dilsukhnagar", line: "blue", x: 110, y: 50 },
+            { id: 25, name: "Chaitanyapuri", line: "blue", x: 130, y: 50 },
+            { id: 26, name: "Victoria Memorial", line: "blue", x: 150, y: 50 },
+            { id: 27, name: "LB Nagar", line: "blue", x: 170, y: 50 },
+            { id: 28, name: "Parade Grounds", line: "green", x: 110, y: 70 },
+            { id: 29, name: "Secunderabad East", line: "green", x: 130, y: 70 },
+            { id: 30, name: "Mettuguda", line: "green", x: 150, y: 70 },
+            { id: 31, name: "Tarnaka", line: "green", x: 170, y: 70 },
+            { id: 32, name: "Habsiguda", line: "green", x: 190, y: 70 },
+            { id: 33, name: "NGRI", line: "green", x: 210, y: 70 },
+            { id: 34, name: "Stadium", line: "green", x: 230, y: 70 },
+            { id: 35, name: "Uppal", line: "green", x: 250, y: 70 },
+            { id: 36, name: "Nagole", line: "green", x: 270, y: 70 },
+            { id: 37, name: "Begumpet", line: "blue", x: 110, y: 50, interchange: true },
+            { id: 38, name: "Prakash Nagar", line: "blue", x: 130, y: 50 },
+            { id: 39, name: "Rasoolpura", line: "blue", x: 150, y: 50 },
+            { id: 40, name: "Paradise", line: "blue", x: 170, y: 50 },
+            { id: 41, name: "Secunderabad West", line: "blue", x: 190, y: 50 },
+            { id: 42, name: "Gandhi Hospital", line: "blue", x: 210, y: 50 },
+            { id: 43, name: "Musheerabad", line: "blue", x: 230, y: 50 },
+            { id: 44, name: "RTC Crossroads", line: "blue", x: 250, y: 50 },
+            { id: 45, name: "Chikkadpally", line: "blue", x: 270, y: 50 },
+            { id: 46, name: "Narayanguda", line: "blue", x: 290, y: 50 },
+            { id: 47, name: "Sultan Bazar", line: "blue", x: 310, y: 50 },
+            { id: 48, name: "MG Bus Station", line: "blue", x: 200, y: 30, interchange: true },
+            { id: 49, name: "Ameerpet", line: "blue", x: 110, y: 30, interchange: true },
+            { id: 50, name: "Madhura Nagar", line: "blue", x: 90, y: 30 },
+            { id: 51, name: "Yusufguda", line: "blue", x: 70, y: 30 },
+            { id: 52, name: "Road No. 5 Jubilee Hills", line: "blue", x: 50, y: 30 },
+            { id: 53, name: "Jubilee Hills Check Post", line: "blue", x: 30, y: 30 },
+            { id: 54, name: "Pedamma Temple", line: "blue", x: 10, y: 30 },
+            { id: 55, name: "Madhapur", line: "blue", x: -10, y: 30 },
+            { id: 56, name: "Durgam Cheruvu", line: "blue", x: -30, y: 30 },
+            { id: 57, name: "HITEC City", line: "blue", x: -50, y: 30 }
+        ];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMetroMap();
+            setupEventListeners();
+            updateRouteDetails();
+        });
+
+        // Render the metro map with stations and lines
+        function renderMetroMap() {
+            const map = document.getElementById('metro-map');
+            
+            // Clear any existing content
+            map.innerHTML = '';
+            
+            // Draw metro lines
+            const redLine = document.createElement('div');
+            redLine.className = 'metro-line line-red';
+            redLine.style.top = '30%';
+            redLine.style.left = '5%';
+            redLine.style.width = '85%';
+            map.appendChild(redLine);
+            
+            const blueLine = document.createElement('div');
+            blueLine.className = 'metro-line line-blue';
+            blueLine.style.top = '50%';
+            blueLine.style.left = '5%';
+            blueLine.style.width = '90%';
+            map.appendChild(blueLine);
+            
+            const greenLine = document.createElement('div');
+            greenLine.className = 'metro-line line-green';
+            greenLine.style.top = '70%';
+            greenLine.style.left = '15%';
+            greenLine.style.width = '70%';
+            map.appendChild(greenLine);
+            
+            // Draw stations
+            metroStations.forEach(station => {
+                const stationEl = document.createElement('div');
+                stationEl.className = `station ${station.interchange ? 'interchange' : ''}`;
+                stationEl.dataset.id = station.id;
+                stationEl.dataset.name = station.name;
+                stationEl.dataset.line = station.line;
+                
+                // Set position (scaled for the map container)
+                const xPos = 5 + station.x / 3;
+                const yPos = 10 + station.y;
+                
+                stationEl.style.left = `${xPos}%`;
+                stationEl.style.top = `${yPos}%`;
+                
+                // Set border color based on line
+                let borderColor;
+                switch(station.line) {
+                    case 'red': borderColor = '#EF4444'; break;
+                    case 'blue': borderColor = '#3B82F6'; break;
+                    case 'green': borderColor = '#10B981'; break;
+                    default: borderColor = '#6B7280';
+                }
+                stationEl.style.borderColor = borderColor;
+                
+                // Add station name tooltip
+                const nameEl = document.createElement('div');
+                nameEl.className = 'station-name';
+                nameEl.textContent = station.name;
+                stationEl.appendChild(nameEl);
+                
+                // Add click event for station selection
+                stationEl.addEventListener('click', function() {
+                    handleStationClick(station);
+                });
+                
+                map.appendChild(stationEl);
+            });
+            
+            // Highlight Ameerpet and HITEC City stations by default
+            setTimeout(() => {
+                highlightStation('Ameerpet');
+                highlightStation('HITEC City');
+            }, 100);
+        }
+
+        // Highlight a station on the map
+        function highlightStation(stationName) {
+            const stations = document.querySelectorAll('.station');
+            stations.forEach(station => {
+                if (station.dataset.name === stationName) {
+                    station.classList.add('selected');
+                }
+            });
+        }
+
+        // Handle station click for selection
+        function handleStationClick(station) {
+            const fromInput = document.getElementById('from-station');
+            const toInput = document.getElementById('to-station');
+            
+            // If from input is empty or same as to input, set from
+            if (!fromInput.value || fromInput.value === toInput.value) {
+                fromInput.value = station.name;
+                document.getElementById('route-from').textContent = station.name;
+            } 
+            // Otherwise set to input
+            else {
+                toInput.value = station.name;
+                document.getElementById('route-to').textContent = station.name;
+            }
+            
+            // Update route details
+            updateRouteDetails();
+            
+            // Highlight selected stations on map
+            const stations = document.querySelectorAll('.station');
+            stations.forEach(s => s.classList.remove('selected'));
+            
+            highlightStation(fromInput.value);
+            highlightStation(toInput.value);
+        }
+
+        // Update route details based on selected stations
+        function updateRouteDetails() {
+            const fromStation = document.getElementById('from-station').value;
+            const toStation = document.getElementById('to-station').value;
+            
+            // Calculate random route details for demo
+            const distance = (Math.random() * 20 + 5).toFixed(1);
+            const stationsCount = Math.floor(Math.random() * 10 + 5);
+            const interchanges = fromStation.includes('Ameerpet') && toStation.includes('HITEC City') ? 1 : 
+                               (fromStation.includes('MG') || toStation.includes('MG')) ? 1 : 0;
+            
+            // Calculate fare based on distance
+            const fare = Math.floor(distance * 2.5 + 10);
+            
+            // Update UI
+            document.getElementById('route-from').textContent = fromStation;
+            document.getElementById('route-to').textContent = toStation;
+            document.getElementById('route-distance').textContent = `${distance} km`;
+            document.getElementById('route-stations').textContent = stationsCount;
+            document.getElementById('route-interchanges').textContent = interchanges;
+            document.getElementById('route-fare').textContent = `₹${fare}`;
+            
+            // Update route description
+            let routeDesc = '';
+            if (fromStation.includes('Ameerpet') && toStation.includes('HITEC City')) {
+                routeDesc = 'Red Line → Blue Line (1 interchange)';
+            } else if (fromStation.includes('MG') || toStation.includes('MG')) {
+                routeDesc = 'Red Line → Blue Line (1 interchange)';
+            } else {
+                routeDesc = 'Direct route on same line';
+            }
+            
+            // Calculate travel time (approx 2 min per station + 5 min per interchange)
+            const travelTime = stationsCount * 2 + interchanges * 5;
+            document.getElementById('route-time').textContent = `Travel Time: ${travelTime} min`;
+            document.getElementById('route-desc').textContent = routeDesc;
+        }
+
+        // Setup all event listeners
+        function setupEventListeners() {
+            // Swap stations button
+            document.getElementById('swap-stations').addEventListener('click', function() {
+                const fromInput = document.getElementById('from-station');
+                const toInput = document.getElementById('to-station');
+                const temp = fromInput.value;
+                fromInput.value = toInput.value;
+                toInput.value = temp;
+                
+                // Update UI
+                document.getElementById('route-from').textContent = fromInput.value;
+                document.getElementById('route-to').textContent = toInput.value;
+                
+                updateRouteDetails();
+                
+                // Update map highlights
+                const stations = document.querySelectorAll('.station');
+                stations.forEach(s => s.classList.remove('selected'));
+                highlightStation(fromInput.value);
+                highlightStation(toInput.value);
+            });
+            
+            // Ticket type selection
+            document.querySelectorAll('.ticket-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.ticket-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Find route button
+            document.getElementById('find-route').addEventListener('click', function() {
+                updateRouteDetails();
+                
+                // Show a notification
+                showNotification('Route calculated successfully!', 'success');
+            });
+            
+            // Book now button
+            document.getElementById('book-now').addEventListener('click', function() {
+                openBookingModal();
+            });
+            
+            // Close modal buttons
+            document.querySelector('.close-modal').addEventListener('click', closeBookingModal);
+            document.getElementById('cancel-booking').addEventListener('click', closeBookingModal);
+            
+            // Confirm booking button
+            document.getElementById('confirm-booking').addEventListener('click', function() {
+                confirmBooking();
+            });
+            
+            // Station input focus - show suggestions
+            document.getElementById('from-station').addEventListener('focus', function() {
+                showStationSuggestions(this);
+            });
+            
+            document.getElementById('to-station').addEventListener('focus', function() {
+                showStationSuggestions(this);
+            });
+        }
+
+        // Show station suggestions
+        function showStationSuggestions(inputElement) {
+            // In a real app, this would show a dropdown with station suggestions
+            // For this demo, we'll just highlight stations on the map
+            const value = inputElement.value.toLowerCase();
+            if (!value) return;
+            
+            const stations = document.querySelectorAll('.station');
+            stations.forEach(station => {
+                const stationName = station.dataset.name.toLowerCase();
+                if (stationName.includes(value)) {
+                    station.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.5)';
+                    setTimeout(() => {
+                        station.style.boxShadow = '';
+                    }, 2000);
+                }
+            });
+        }
+
+        // Open booking modal
+        function openBookingModal() {
+            const fromStation = document.getElementById('from-station').value;
+            const toStation = document.getElementById('to-station').value;
+            const date = document.getElementById('travel-date').value;
+            const time = document.getElementById('travel-time').value;
+            const ticketType = document.querySelector('.ticket-option.selected').dataset.type;
+            const fare = document.getElementById('route-fare').textContent;
+            
+            // Format date
+            const formattedDate = new Date(date).toLocaleDateString('en-IN', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Create booking details HTML
+            const bookingDetails = `
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin-bottom: 0.5rem;">Journey Details</h3>
+                    <p><strong>From:</strong> ${fromStation}</p>
+                    <p><strong>To:</strong> ${toStation}</p>
+                    <p><strong>Date:</strong> ${formattedDate}</p>
+                    <p><strong>Time:</strong> ${time}</p>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin-bottom: 0.5rem;">Ticket Information</h3>
+                    <p><strong>Ticket Type:</strong> ${getTicketTypeName(ticketType)}</p>
+                    <p><strong>Fare:</strong> ${fare}</p>
+                    <p><strong>Booking ID:</strong> HM${Date.now().toString().slice(-8)}</p>
+                </div>
+                
+                <div style="background-color: #F3F4F6; padding: 1rem; border-radius: 8px;">
+                    <p><strong>Total Amount to Pay:</strong> ${fare}</p>
+                </div>
+            `;
+            
+            document.getElementById('booking-details').innerHTML = bookingDetails;
+            document.getElementById('booking-modal').style.display = 'flex';
+        }
+
+        // Get ticket type name from value
+        function getTicketTypeName(type) {
+            switch(type) {
+                case 'single': return 'Single Journey';
+                case 'return': return 'Return Trip';
+                case 'daypass': return 'Day Pass';
+                default: return 'Single Journey';
+            }
+        }
+
+        // Close booking modal
+        function closeBookingModal() {
+            document.getElementById('booking-modal').style.display = 'none';
+        }
+
+        // Confirm booking
+        function confirmBooking() {
+            const fromStation = document.getElementById('from-station').value;
+            const toStation = document.getElementById('to-station').value;
+            const fare = document.getElementById('route-fare').textContent;
+            
+            // Show success notification
+            showNotification(`Booking confirmed for ${fromStation} to ${toStation}! ${fare} deducted from your wallet.`, 'success');
+            
+            // Close modal
+            closeBookingModal();
+            
+            // Add to recent bookings (in a real app, this would be saved to a backend)
+            addToRecentBookings(fromStation, toStation, fare);
+            
+            // Reset form for next booking
+            setTimeout(() => {
+                document.getElementById('from-station').value = '';
+                document.getElementById('to-station').value = 'HITEC City';
+                updateRouteDetails();
+                
+                const stations = document.querySelectorAll('.station');
+                stations.forEach(s => s.classList.remove('selected'));
+                highlightStation('HITEC City');
+            }, 2000);
+        }
+
+        // Add booking to recent bookings list
+        function addToRecentBookings(from, to, fare) {
+            const bookingsList = document.querySelector('.bookings-list');
+            const newBooking = document.createElement('div');
+            newBooking.className = 'booking-item';
+            newBooking.innerHTML = `
+                <div class="booking-route">
+                    <div class="route-line blue"></div>
+                    <div>
+                        <h4>${from} → ${to}</h4>
+                        <p class="booking-time">Today, ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} · Single Journey</p>
+                    </div>
+                </div>
+                <div class="booking-fare">
+                    <h4>${fare}</h4>
+                </div>
+                <div class="booking-actions">
+                    <button>View Ticket</button>
+                </div>
+            `;
+            
+            // Insert at the top of the list
+            if (bookingsList.firstChild) {
+                bookingsList.insertBefore(newBooking, bookingsList.firstChild);
+            } else {
+                bookingsList.appendChild(newBooking);
+            }
+            
+            // Limit to 5 recent bookings
+            const bookings = bookingsList.querySelectorAll('.booking-item');
+            if (bookings.length > 5) {
+                bookings[bookings.length - 1].remove();
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div style="position: fixed; top: 100px; right: 20px; background-color: ${type === 'success' ? '#10B981' : '#EF4444'}; color: white; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 1000; display: flex; align-items: center; gap: 10px; min-width: 300px;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
